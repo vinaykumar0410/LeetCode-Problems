@@ -1,4 +1,4 @@
-
+// Tag - Easy
 class Solution {
     // initialize sum as global variable as we use recursion
     int sum = 0;
