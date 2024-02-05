@@ -1,4 +1,5 @@
 
+// Tag - Medium
 class Solution {
     public String convert(String s, int numRows) {
         // edge case
@@ -14,8 +15,8 @@ class Solution {
         int row = 0;
         int index = 0;
         while(index < s.length()){
+            
             char ch = s.charAt(index++);
-
             rows[row].append(ch);
 
             if(goingDown){
