@@ -1,6 +1,5 @@
 
 // Tag - Easy
-import java.util.*;
 
 class Solution {
     public int[] resultArray(int[] nums) {
