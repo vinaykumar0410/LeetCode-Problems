@@ -55,3 +55,71 @@ class Solution {
         return i>=0 && i<n && j>=0 && j<m;
     }
 }
+
+
+/* BFS APPROACH */
+
+class Solution {
+    public int closedIsland(int[][] grid) {
+        int m = grid.length; // row length
+        int n = grid[0].length; // col length
+
+        // pre computation (convert border 0's to 1's using bfs)
+        for(int i=0; i<m; i++){
+            if(grid[i][0] == 0) bfs(i,0,m,n,grid);
+            if(grid[i][n-1] == 0) bfs(i,n-1,m,n,grid);
+        }
+
+        for(int j=0; j<n; j++){
+            if(grid[0][j] == 0) bfs(0,j,m,n,grid);
+            if(grid[m-1][j] == 0) bfs(m-1,j,m,n,grid);
+        }
+
+        // go through entire matrix and count closed islands
+        int closedIslands = 0;
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                // found land check neighbors using bfs
+                if(grid[i][j] == 0){
+                    bfs(i,j,m,n,grid);
+                    closedIslands++;
+                }
+            }
+        }
+
+        return closedIslands;
+    }
+
+    // all four neighbors of current node
+    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
+
+    // bfs function to check neighbors
+    private void bfs(int i,int j,int m,int n,int[][] grid){
+        Queue<int[]> q = new LinkedList();
+        // add current node to q and mark it as 1(water) (visited)
+        q.offer(new int[]{i,j});
+        grid[i][j] = 1;
+        while(!q.isEmpty()){
+            int r = q.peek()[0];
+            int c = q.peek()[1];
+            // poll out current node as it was visited(marked as 1(water))
+            q.poll();
+            // check all neighbors
+            for(int[] dir : dirs){
+                int newr = r + dir[0];
+                int newc = c + dir[1];
+                // if current node is valid and found land
+                if(isSafe(newr,newc,m,n) && grid[newr][newc] == 0){
+                    // mark it as water and add it to queue
+                    grid[newr][newc] = 1;
+                    q.offer(new int[]{newr,newc});
+                }
+            }
+        }
+    }
+
+    // isSafe function determines whether grid[i][j] is valid or not
+    boolean isSafe(int i,int j,int m,int n){
+        return i>=0 && i<m && j>=0 && j<n;
+    }
+}
